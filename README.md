@@ -1,6 +1,6 @@
 # WordPress Plugin Boilerplate
 
-This repository, developed under [Plugins & Snippets](https://www.pluginsandsnippets.com), offers an open source WordPress Plugin Template with many useful functions, specially to prepare basic widgets, short codes and settings page. The aim of this Boilerplate Template is to save time for WordPress Developers in building high-quality plugins.
+This repository, developed by the team of [Plugins & Snippets](https://www.pluginsandsnippets.com), offers an open source WordPress Plugin Template with many useful functions, specially to prepare basic widgets, short codes and settings page. The aim of this Boilerplate Template is to save time for WordPress Developers in building high-quality plugins.
 
 ## Contents
 
@@ -18,6 +18,7 @@ The WordPress Plugin Template Boilerplate includes the following files:
 * Templates for WordPress widgets and shortcodes. 
 * Template to create fast-loading setting page.
 * Includes EDD Software Licensing System, which allows you to sell your plugin by using Easy Digital Downloads and manage future access to plugin updates.
+* Popup to collect User Feedback when deactivating the plugin
 * All classes, functions, and variables are documented
 * The WordPress Plugin Template Boilerplate uses a strict file organization scheme corresponding to the WordPress Plugin Repository structure. This makes it easy to organize the files of your plugin.
 * The plugin template includes a `.pot` file as a starting point for internationalization.
@@ -70,14 +71,16 @@ The example code provided shows how to register your hooks with the Loader class
 
 # Credits
 
-The WordPress Plugin Boilerplate was started in 2022 under the Company [Plugins & Snippets](https://www.pluginsandsnippets.com).
+The WordPress Plugin Boilerplate Template was developed from 2018 - 2022 by the team of [Plugins & Snippets](https://www.pluginsandsnippets.com).
 
-The current version of the Boilerplate was developed in conjunction by [Dilip Sakariya](https://github.com/dilipsakariya), [Napoleao Wingert](https://github.com/napoleaowingert) and [Siawa Ahmed](https://github.com/siawaahmed).
+The following people contributed to the plugin [Dilip Sakariya](https://github.com/dilipsakariya), [Napoleao Wingert](https://github.com/napoleaowingert) and [Siawa Ahmed](https://github.com/siawaahmed).
+
 
 ## Documentation, FAQs, and More
 
-If you’re interested in writing any documentation or creating tutorials please [let us know](https://www.pluginsandsnippets.com/contact/).
-Also, kindly follow this repository by watching and marking as starred for future reference.
+Please feel free to reach out to our team for feedback, comments or suggestions about any additonal feature you like to see included [contact us](https://www.pluginsandsnippets.com/contact/).
+
+If you like this repository, please mark it to be watched and add a star so that you will be notified of any future update.
 
 
 
