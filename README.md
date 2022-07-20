@@ -1,6 +1,6 @@
 # WordPress Plugin Boilerplate
 
-This repository offers an open source WordPress Plugin Template with many useful functions, specially to prepare basic widgets, short codes and settings page. The aim of this Boilerplate Template is to save time for WordPress Developers in building high-quality plugins.
+This repository, developed under [Plugins & Snippets](https://www.pluginsandsnippets.com), offers an open source WordPress Plugin Template with many useful functions, specially to prepare basic widgets, short codes and settings page. The aim of this Boilerplate Template is to save time for WordPress Developers in building high-quality plugins.
 
 ## Contents
 
@@ -72,8 +72,14 @@ The example code provided shows how to register your hooks with the Loader class
 
 The WordPress Plugin Boilerplate was started in 2022 under the Company [Plugins & Snippets](https://www.pluginsandsnippets.com).
 
-The current version of the Boilerplate was developed in conjunction by [Dilip Sakariya](https://github.com/dilipsakariya), and [Siawa Ahmed](https://github.com/siawaahmed).
+The current version of the Boilerplate was developed in conjunction by [Dilip Sakariya](https://github.com/dilipsakariya), [Napoleao Wingert](https://github.com/napoleaowingert) and [Siawa Ahmed](https://github.com/siawaahmed).
 
 ## Documentation, FAQs, and More
 
-If you’re interested in writing any documentation or creating tutorials please [let us know](https://www.pluginsandsnippets.com/contact/) .
+If you’re interested in writing any documentation or creating tutorials please [let us know](https://www.pluginsandsnippets.com/contact/).
+Also, kindly follow this repository by watching and marking as starred for future reference.
+
+
+
+
+
