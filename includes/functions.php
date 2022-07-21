@@ -139,7 +139,7 @@ if ( ! function_exists( 'wp_pt_get_settings' ) ) {
 			'selectbox_multi' => array(),
 			'textarea'        => '',
 			'file_upload'     => '',
-			'preserve_data'   => '',
+			'remove_data'     => '',
 		);
 
 		$settings = get_option( 'wp_pt_settings' );

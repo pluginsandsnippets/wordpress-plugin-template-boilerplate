@@ -4,7 +4,7 @@
 
 		$( '#wp_plugin_template_settings_tabs_header a' ).on( 'click', function( e ) {
 			e.preventDefault();
-			if( $( this ).hasClass( 'wp-pt-tab-active' ) ) {
+			if ( $( this ).hasClass( 'wp-pt-tab-active' ) ) {
 				return;
 			}
 

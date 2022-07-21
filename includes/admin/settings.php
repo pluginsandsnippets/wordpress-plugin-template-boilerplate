@@ -11,6 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+global $wpdb;
+
 if ( isset( $_POST['wp_pt_save_settings'] ) ) {
 	update_option( 'wp_pt_settings', $_POST['wp_pt'], false );
 	$message = __( 'Settings have been successfully updated.', 'wp-plugin-template' );
@@ -18,6 +20,7 @@ if ( isset( $_POST['wp_pt_save_settings'] ) ) {
 }
 
 $settings = wp_pt_get_settings();
+
 ?>
 <div class="wrap">
 	<h1><?php _e( 'Settings', 'wp-plugin-template' ); ?></h1>
@@ -27,9 +30,10 @@ $settings = wp_pt_get_settings();
 	<form method="post" action="">
 		<div id="wp_plugin_template_settings_tabs">
 			<div id="wp_plugin_template_settings_tabs_header">
-			  <a href="#wp_pt_settings_tab_1" class="wp-pt-tab-active"><?php _e( 'Tab1','wp-plugin-template' ); ?></a>
-			  <a href="#wp_pt_settings_tab_2"><?php _e( 'Tab2', 'wp-plugin-template' ); ?></a>
-			  <a href="#wp_pt_settings_tab_3"><?php _e( 'Tab3', 'wp-plugin-template' ); ?></a>
+				<a href="#wp_pt_settings_tab_1" class="wp-pt-tab-active"><?php _e( 'Tab1', 'wp-plugin-template' ); ?></a>
+				<a href="#wp_pt_settings_tab_2"><?php _e( 'Shortcodes', 'wp-plugin-template' ); ?></a>
+				<a href="#wp_pt_settings_tab_3"><?php _e( 'Widgets', 'wp-plugin-template' ); ?></a>
+				<a href="#wp_pt_settings_tab_4"><?php _e( 'Database', 'wp-plugin-template' ); ?></a>
 			</div>
 			
 			<div id="wp_pt_settings_tab_1" class="wp-pt-tab-content wp-pt-tab-active">
@@ -130,10 +134,10 @@ $settings = wp_pt_get_settings();
 
 						<tr valign="top">
 							<th scope="row">
-								<label for="preserve_data"><?php _e( 'Preserve Plugin Data on Uninstall', 'wp-plugin-template' ); ?></label>
+								<label for="remove_Data"><?php _e( 'Remove Plugin Data on Uninstall', 'wp-plugin-template' ); ?></label>
 							</th>
 							<td>
-								<input type="checkbox" id="preserve_data" name="wp_pt[preserve_data]" value="1" <?php checked( $settings['preserve_data'], '1' ); ?> />
+								<input type="checkbox" id="remove_Data" name="wp_pt[remove_Data]" value="1" <?php checked( $settings['remove_Data'], '1' ); ?> />
 								<p class="description"><?php _e( 'If checked then on plugin uninstallation plugin data will not be removed from database.', 'wp-plugin-template'); ?></p>
 							</td>
 						</tr>
@@ -145,19 +149,28 @@ $settings = wp_pt_get_settings();
 			
 			<div id="wp_pt_settings_tab_2" class="wp-pt-tab-content">
 				
-				<h2 style="margin:0;"><?php _e( 'Tab 2', 'wp-plugin-template' ); ?></h2>
+				<h2 style="margin:0;"><?php _e( 'Shortcodes', 'wp-plugin-template' ); ?></h2>
 				<hr />
-				<table class="form-table">
-					
-				</table>
+				<p><?php _e( 'Following is a set of shortcodes available.', 'wp-plugin-template' ); ?></p>
+
+				<ol>
+					<li><strong>[wp_pt_dummy_shortcode]</strong><br><?php _e( 'This shortcode just outputs the words "Shortcode Executed" when used.', 'wp-plugin-template' ); ?></li>
+				</ol>
 			</div>
 			<div id="wp_pt_settings_tab_3" class="wp-pt-tab-content">
 				
-				<h2 style="margin:0;"><?php _e( 'Tab 3', 'wp-plugin-template' ); ?></h2>
+				<h2 style="margin:0;"><?php _e( 'Widgets', 'wp-plugin-template' ); ?></h2>
 				<hr />
-				<table class="form-table">
-					
-				</table>
+				<p><?php _e( 'A widget titled <strong>Dummy Widget</strong> can be used to output words "Widget Content".', 'wp-plugin-template' ); ?></p>
+			</div>
+			<div id="wp_pt_settings_tab_4" class="wp-pt-tab-content">
+				
+				<h2 style="margin:0;"><?php _e( 'Database', 'wp-plugin-template' ); ?></h2>
+				<hr />
+				<p><?php _e( 'Upon activation of plugin following tables are created to store plugin data.', 'wp-plugin-template' ); ?></p>
+				<ol>
+					<li><?php echo $wpdb->prefix; ?>plugin_template_ps</li>
+				</ol>
 			</div>
 			
 		</div>                

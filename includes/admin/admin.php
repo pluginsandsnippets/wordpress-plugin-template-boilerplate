@@ -258,7 +258,7 @@ if ( ! class_exists( 'WP_Plugin_Template_Admin' ) ) {
 			$supportUrl     = WP_PLUGIN_TEMPLATE_SUPPORT_URL;
 			$plugin_name    = WP_PLUGIN_TEMPLATE_NAME;
 
-			$licence_page   = wp_pt_get_admin_page_by_name( 'license' );
+			$license_page   = wp_pt_get_admin_page_by_name( 'license' );
 
 			$licensing_page_url = admin_url( 'admin.php?page='. $license_page['slug'] );
 			
@@ -506,16 +506,10 @@ if ( ! class_exists( 'WP_Plugin_Template_Admin' ) ) {
 
 			static $this_plugin;
 
-			if ( empty( $this_plugin ) ) {
-				$this_plugin = 'wp-plugin-template/wp-plugin-template.php';
-			}
-
-			if ( $file == $this_plugin ) {
-				$main_page = wp_pt_get_admin_page_by_name();
-				$settings_link = sprintf( esc_html__( '%1$s Settings %2$s', 'edd-lpct' ), '<a href="' . admin_url( 'admin.php?page='. $main_page['slug'] ) . '">', '</a>' );
-				
-				array_unshift( $links, $settings_link );
-			}
+			$main_page = wp_pt_get_admin_page_by_name();
+			$settings_link = sprintf( esc_html__( '%1$s Settings %2$s', 'edd-lpct' ), '<a href="' . admin_url( 'admin.php?page='. $main_page['slug'] ) . '">', '</a>' );
+			
+			array_unshift( $links, $settings_link );
 
 			return $links;
 		}

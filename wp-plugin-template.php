@@ -3,7 +3,7 @@
  * Plugin Name:     WP Plugin Template
  * Plugin URI:      https://www.pluginsandsnippets.com/downloads/wp-plugin-template/
  * Description:     WP Plugin Template
- * Version:         1.0.1
+ * Version:         1.0.2
  * Author:          Plugins & Snippets
  * Author URI:      https://www.pluginsandsnippets.com/
  * Text Domain:     wp-plugin-template
@@ -56,7 +56,7 @@ if ( ! class_exists( 'WP_Plugin_Template' ) ) {
 				self::$instance = new WP_Plugin_Template();
 				self::$instance->setup_constants();
 
-				if( ! self::$instance->check_dependencies() ) {
+				if ( ! self::$instance->check_dependencies() ) {
 					return self::$instance; // Dependencies Not Found
 				}
 
@@ -96,20 +96,20 @@ if ( ! class_exists( 'WP_Plugin_Template' ) ) {
 			$message = '';
 
 			foreach ( $classes_to_check as $class_to_check => $class_message ) {
-				if( ! class_exists( $class_to_check ) ) {
+				if ( ! class_exists( $class_to_check ) ) {
 					$message .= '<p>' . $class_message . '</p>';
 					$dependencies_found = false;
 				}
 			}
 
 			foreach( $functions_to_check as $function_name => $function_message ) {
-				if( ! function_exists( $function_name ) ) {
+				if ( ! function_exists( $function_name ) ) {
 					$message .= '<p>' . $function_message . '</p>';
 					$dependencies_found = false;
 				}
 			}
 
-			if(  ! $dependencies_found ) {
+			if (  ! $dependencies_found ) {
 				
 				self::$dependencies_message = $message;
 
@@ -137,7 +137,7 @@ if ( ! class_exists( 'WP_Plugin_Template' ) ) {
 		private function setup_constants() {
 
 			// Plugin related constants
-			define( 'WP_PLUGIN_TEMPLATE_VER', '1.0.1' );
+			define( 'WP_PLUGIN_TEMPLATE_VER', '1.0.2' );
 			define( 'WP_PLUGIN_TEMPLATE_NAME', 'WP Plugin Template' );
 			define( 'WP_PLUGIN_TEMPLATE_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 			define( 'WP_PLUGIN_TEMPLATE_URL', plugin_dir_url( __FILE__ ) );
