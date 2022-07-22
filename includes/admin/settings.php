@@ -134,10 +134,10 @@ $settings = wp_pt_get_settings();
 
 						<tr valign="top">
 							<th scope="row">
-								<label for="remove_Data"><?php _e( 'Remove Plugin Data on Uninstall', 'wp-plugin-template' ); ?></label>
+								<label for="remove_data"><?php _e( 'Remove Plugin Data on Uninstall', 'wp-plugin-template' ); ?></label>
 							</th>
 							<td>
-								<input type="checkbox" id="remove_Data" name="wp_pt[remove_Data]" value="1" <?php checked( $settings['remove_Data'], '1' ); ?> />
+								<input type="checkbox" id="remove_data" name="wp_pt[remove_data]" value="1" <?php checked( $settings['remove_data'], '1' ); ?> />
 								<p class="description"><?php _e( 'If checked then on plugin uninstallation plugin data will not be removed from database.', 'wp-plugin-template'); ?></p>
 							</td>
 						</tr>
