@@ -162,6 +162,7 @@ $settings = wp_pt_get_settings();
 				<h2 style="margin:0;"><?php _e( 'Widgets', 'wp-plugin-template' ); ?></h2>
 				<hr />
 				<p><?php _e( 'A widget titled <strong>Dummy Widget</strong> can be used to output words "Widget Content".', 'wp-plugin-template' ); ?></p>
+				<p><a href="<?php echo admin_url( 'widgets.php' ); ?>" target="_blank"><?php _e( 'Visit Widgets', 'wp-plugin-template' ); ?></a></p>
 			</div>
 			<div id="wp_pt_settings_tab_4" class="wp-pt-tab-content">
 				
