@@ -3,7 +3,7 @@
  * Plugin Name:     WP Plugin Template
  * Plugin URI:      https://www.pluginsandsnippets.com/downloads/wp-plugin-template/
  * Description:     WP Plugin Template
- * Version:         1.0.2
+ * Version:         1.0.3
  * Author:          Plugins & Snippets
  * Author URI:      https://www.pluginsandsnippets.com/
  * Text Domain:     wp-plugin-template
@@ -137,7 +137,7 @@ if ( ! class_exists( 'WP_Plugin_Template' ) ) {
 		private function setup_constants() {
 
 			// Plugin related constants
-			define( 'WP_PLUGIN_TEMPLATE_VER', '1.0.2' );
+			define( 'WP_PLUGIN_TEMPLATE_VER', '1.0.3' );
 			define( 'WP_PLUGIN_TEMPLATE_NAME', 'WP Plugin Template' );
 			define( 'WP_PLUGIN_TEMPLATE_DIR', trailingslashit( plugin_dir_path( __FILE__ ) ) );
 			define( 'WP_PLUGIN_TEMPLATE_URL', plugin_dir_url( __FILE__ ) );
