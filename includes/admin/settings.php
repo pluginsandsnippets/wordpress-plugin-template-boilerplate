@@ -30,7 +30,7 @@ $settings = wp_pt_get_settings();
 	<form method="post" action="">
 		<div id="wp_plugin_template_settings_tabs">
 			<div id="wp_plugin_template_settings_tabs_header">
-				<a href="#wp_pt_settings_tab_1" class="wp-pt-tab-active"><?php _e( 'Tab1', 'wp-plugin-template' ); ?></a>
+				<a href="#wp_pt_settings_tab_1" class="wp-pt-tab-active"><?php _e( 'Fields', 'wp-plugin-template' ); ?></a>
 				<a href="#wp_pt_settings_tab_2"><?php _e( 'Shortcodes', 'wp-plugin-template' ); ?></a>
 				<a href="#wp_pt_settings_tab_3"><?php _e( 'Widgets', 'wp-plugin-template' ); ?></a>
 				<a href="#wp_pt_settings_tab_4"><?php _e( 'Database', 'wp-plugin-template' ); ?></a>
@@ -38,7 +38,7 @@ $settings = wp_pt_get_settings();
 			
 			<div id="wp_pt_settings_tab_1" class="wp-pt-tab-content wp-pt-tab-active">
 				
-				<h2 style="margin:0;"><?php _e( 'Tab 1','wp-plugin-template' ); ?></h2>
+				<h2 style="margin:0;"><?php _e( 'Fields','wp-plugin-template' ); ?></h2>
 				<hr />
 				<table class="form-table">
 					<tbody>
