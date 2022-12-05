@@ -97,7 +97,7 @@ if ( isset( $_POST['wp_pt_submit_deactivate_license'] ) ) {
 $wp_plugin_template = WP_Plugin_Template::get_admin_instance();
 $license_status     = $wp_plugin_template->plugin_check_license();
 
-if( ! is_array( $license_status ) ) {
+if ( ! is_array( $license_status ) ) {
 	$license_status = array(
 		'license_status' => false,
 		'message_error'  => false,

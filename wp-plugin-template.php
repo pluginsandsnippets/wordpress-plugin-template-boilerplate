@@ -1,14 +1,14 @@
 <?php
 /**
- * Plugin Name:     WP Plugin Template
- * Plugin URI:      https://www.pluginsandsnippets.com/downloads/wp-plugin-template/
- * Description:     WP Plugin Template
- * Version:         1.0.3
- * Author:          Plugins & Snippets
- * Author URI:      https://www.pluginsandsnippets.com/
- * Text Domain:     wp-plugin-template
- * Requires at least:   3.9
- * Tested up to:        5.9.3
+ * Plugin Name:       WP Plugin Template
+ * Plugin URI:        https://www.pluginsandsnippets.com/downloads/wp-plugin-template/
+ * Description:       WP Plugin Template
+ * Version:           1.0.3
+ * Author:            Plugins & Snippets
+ * Author URI:        https://www.pluginsandsnippets.com/
+ * Text Domain:       wp-plugin-template
+ * Requires at least: 3.9
+ * Tested up to:      6.1.1
  *
  * @package         WP_Plugin_Template
  * @author          PluginsandSnippets.com
@@ -79,11 +79,11 @@ if ( ! class_exists( 'WP_Plugin_Template' ) ) {
 		public function check_dependencies() {
 
 			$url  = esc_url( wp_nonce_url( self_admin_url( 'update.php?action=install-plugin&plugin=easy-digital-downloads' ), 'install-plugin_easy-digital-downloads' ) );
-            $edd_install_link = '<a href="' . $url . '">' . __( 'install it', 'wp-plugin-template' ) . '</a>';
+			$edd_install_link = '<a href="' . $url . '">' . __( 'install it', 'wp-plugin-template' ) . '</a>';
 
-            // Following is an example for making the plugin dependent
-            // upon Easy Digital Downloads
-            // Uncomment the line to make this plugin dependent
+			// Following is an example for making the plugin dependent
+			// upon Easy Digital Downloads
+			// Uncomment the line to make this plugin dependent
 			$classes_to_check = array(
 				// 'Easy_Digital_Downloads' => WP_PLUGIN_TEMPLATE_NAME . sprintf( __( ' requires Easy Digital Downloads! Please %s to continue!' , 'wp-plugin-template' ), $edd_install_link  ),
 			);
@@ -283,10 +283,10 @@ if ( ! class_exists( 'WP_Plugin_Template' ) ) {
  *              situations where your extension is activated but EDD is not
  *              present.
  */
-function wp_pt_plugin_template_load() {
+function wp_pt_plugin_template_get_instance() {
 	return WP_Plugin_Template::instance();
 }
-add_action( 'plugins_loaded', 'wp_pt_plugin_template_load' );
+add_action( 'plugins_loaded', 'wp_pt_plugin_template_get_instance' );
 
 
 /**
@@ -304,8 +304,7 @@ function wp_pt_activation() {
 }
 register_activation_hook( __FILE__, 'wp_pt_activation' );
 
-add_action ( 'init', 'wp_pt_load_functions' );
-
 function wp_pt_load_functions() {
 	require_once WP_PLUGIN_TEMPLATE_DIR . 'includes/functions.php';
 }
+add_action ( 'init', 'wp_pt_load_functions' );

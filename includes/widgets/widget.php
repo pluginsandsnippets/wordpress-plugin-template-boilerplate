@@ -14,14 +14,16 @@ if ( ! class_exists( 'WP_Plugin_Template_Dummy_Widgets' ) ) :
 				'classname'   => 'wp_pt_dummy_widget',
 				'description' => __( 'Plugin Template Widget Example', 'wp-plugin-template' ),
 			);
-			parent::__construct( 'wp_pt_dummy_widget', __( 'Dummy Widget' ), $widget_ops );
+			parent::__construct( 'wp_pt_dummy_widget', __( 'Dummy Widget', 'wp-plugin-template' ), $widget_ops );
 		}
 
 		public function widget( $args, $instance ) {
 			echo $args['before_widget'];
+			
 			if ( ! empty( $instance['title'] ) ) {
 				echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
 			}
+			
 			echo esc_html__( 'Widget Content', 'wp-plugin-template' );
 			echo $args['after_widget'];
 		}
@@ -29,10 +31,10 @@ if ( ! class_exists( 'WP_Plugin_Template_Dummy_Widgets' ) ) :
 		public function form( $instance ) {
 			$title = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'New title', 'wp-plugin-template' );
 			?>
-		<p>
-		<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'wp-plugin-template' ); ?></label> 
-		<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
-		</p>
+				<p>
+				<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'wp-plugin-template' ); ?></label> 
+				<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+				</p>
 			<?php
 		}
 

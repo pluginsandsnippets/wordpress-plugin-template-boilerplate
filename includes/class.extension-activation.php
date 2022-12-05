@@ -81,12 +81,12 @@ class EDD_Extension_Activation {
 	public function plugin_template_wp_missing_edd_notice() {
 		if ( $this->has_edd ) {
 			$url  = esc_url( wp_nonce_url( admin_url( 'plugins.php?action=activate&plugin=' . $this->edd_base ), 'activate-plugin_' . $this->edd_base ) );
-			$link = '<a href="' . $url . '">' . __( 'activate it', 'edd-extension-activation' ) . '</a>';
+			$link = '<a href="' . $url . '">' . __( 'activate it', 'wp-plugin-template' ) . '</a>';
 		} else {
 			$url  = esc_url( wp_nonce_url( self_admin_url( 'update.php?action=install-plugin&plugin=easy-digital-downloads' ), 'install-plugin_easy-digital-downloads' ) );
-			$link = '<a href="' . $url . '">' . __( 'install it', 'edd-extension-activation' ) . '</a>';
+			$link = '<a href="' . $url . '">' . __( 'install it', 'wp-plugin-template' ) . '</a>';
 		}
 		
-		echo '<div class="error"><p>' . $this->plugin_name . sprintf( __( ' requires Easy Digital Downloads! Please %s to continue!', 'edd-extension-activation' ), $link ) . '</p></div>';
+		echo '<div class="error"><p>' . $this->plugin_name . sprintf( __( ' requires Easy Digital Downloads! Please %s to continue!', 'wp-plugin-template' ), $link ) . '</p></div>';
 	}
 }

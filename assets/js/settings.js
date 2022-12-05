@@ -1,4 +1,4 @@
-;(function ( $, window, undefined ) {
+;( function ( $, window, undefined ) {
 
 	$( function() {
 
@@ -38,4 +38,4 @@
 		} );
 	} );
 
-}(jQuery, window));
+}( jQuery, window ) );

@@ -20,14 +20,18 @@ if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
 	exit;
 }
 
-$wp_pt_settings = get_option( 'wp_pt_settings', array() );
+function wp_pt_uninstall() {
+	$wp_pt_settings = get_option( 'wp_pt_settings', array() );
 
-if ( is_array( $wp_pt_settings ) && isset( $wp_pt_settings['remove_data'] ) && 1 === intval( $wp_pt_settings['remove_data'] ) ) {
-	
-	global $wpdb;
+	if ( is_array( $wp_pt_settings ) && isset( $wp_pt_settings['remove_data'] ) && 1 === intval( $wp_pt_settings['remove_data'] ) ) {
+		
+		global $wpdb;
 
-	// delete the options
-	delete_option( 'wp_pt_settings' );
+		// delete the options
+		delete_option( 'wp_pt_settings' );
 
-    // remove any other data like other wp_option data and/or database tables
+		// remove any other data like other wp_option data and/or database tables
+	}
 }
+
+wp_pt_uninstall();

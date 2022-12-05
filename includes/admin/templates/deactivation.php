@@ -17,7 +17,7 @@ $wp_pt_deactivation_nonce = wp_create_nonce( 'wp_pt_deactivation_nonce' );
 	<div class="wp-pt-serveypanel">
 		<form action="#" method="post" id="wp-pt-deactivate-form">
 			<div class="wp-pt-popup-header">
-				<h2><?php _e( 'Quick feedback about '. WP_PLUGIN_TEMPLATE_NAME, 'wp-plugin-template' ); ?></h2>
+				<h2><?php _e( 'Quick feedback about ' . WP_PLUGIN_TEMPLATE_NAME, 'wp-plugin-template' ); ?></h2>
 			</div>
 			<div class="wp-pt-popup-body">
 				<h3><?php _e( 'If you have a moment, please let us know why you are deactivating:', 'wp-plugin-template' ); ?></h3>

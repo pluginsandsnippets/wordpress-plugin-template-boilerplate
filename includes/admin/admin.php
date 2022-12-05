@@ -90,14 +90,14 @@ if ( ! class_exists( 'WP_Plugin_Template_Admin' ) ) {
 			if ( wp_pt_is_admin_page( 'plugins.php' ) ) {
 				wp_enqueue_style(
 					'wp_pt_deactivation_style',
-					WP_PLUGIN_TEMPLATE_URL . 'assets/css/deactivation-notice' . $suffix . '.css',
+					WP_PLUGIN_TEMPLATE_URL . 'assets/css/deactivation' . $suffix . '.css',
 					array(),
 					WP_PLUGIN_TEMPLATE_VER
 				);
 
 				wp_enqueue_script(
 					'wp_pt_deactivation_script',
-					WP_PLUGIN_TEMPLATE_URL . 'assets/js/deactivation-notice' . $suffix . '.js',
+					WP_PLUGIN_TEMPLATE_URL . 'assets/js/deactivation' . $suffix . '.js',
 					array( 'jquery' ),
 					WP_PLUGIN_TEMPLATE_VER,
 					true
@@ -119,11 +119,11 @@ if ( ! class_exists( 'WP_Plugin_Template_Admin' ) ) {
 			$license_page = wp_pt_get_admin_page_by_name( 'license' );
 			array_push( $plugin_meta, '<a href="' . admin_url( 'admin.php?page='. $license_page['slug'] ) . '">' . __( 'License', 'wp-plugin-template' ) . '</a>' ) ;
 
-			array_push( $plugin_meta, '<a href="'.WP_PLUGIN_TEMPLATE_DOCUMENTATION_URL.'" target="_blank">' . __( 'Documentation', 'wp-plugin-template' ) . '</a>' );
+			array_push( $plugin_meta, '<a href="' . WP_PLUGIN_TEMPLATE_DOCUMENTATION_URL . '" target="_blank">' . __( 'Documentation', 'wp-plugin-template' ) . '</a>' );
 
-			array_push( $plugin_meta, '<a href="'.WP_PLUGIN_TEMPLATE_OPEN_TICKET_URL.'" target="_blank">' . __( 'Open Support Ticket', 'wp-plugin-template' ) . '</a>' );
+			array_push( $plugin_meta, '<a href="' . WP_PLUGIN_TEMPLATE_OPEN_TICKET_URL . '" target="_blank">' . __( 'Open Support Ticket', 'wp-plugin-template' ) . '</a>' );
 
-			array_push( $plugin_meta, '<a href="'.WP_PLUGIN_TEMPLATE_REVIEW_URL.'" target="_blank">' . __( 'Post Review', 'wp-plugin-template' ) . '</a>' );
+			array_push( $plugin_meta, '<a href="' . WP_PLUGIN_TEMPLATE_REVIEW_URL . '" target="_blank">' . __( 'Post Review', 'wp-plugin-template' ) . '</a>' );
 
 			return $plugin_meta;
 		}
@@ -180,15 +180,15 @@ if ( ! class_exists( 'WP_Plugin_Template_Admin' ) ) {
 		}
 
 		public function wp_pt_load_main_page(){
-			require_once( WP_PLUGIN_TEMPLATE_DIR. 'includes/admin/settings.php' );
+			require_once( WP_PLUGIN_TEMPLATE_DIR. 'includes/admin/settings/settings.php' );
 		}
 
 		public function wp_pt_load_license_page(){
-			require_once( WP_PLUGIN_TEMPLATE_DIR. 'includes/admin/license.php' );
+			require_once( WP_PLUGIN_TEMPLATE_DIR. 'includes/admin/templates/license.php' );
 		}
 
 		public function wp_pt_load_general_page(){
-			require_once( WP_PLUGIN_TEMPLATE_DIR. 'includes/admin/page.php' );
+			require_once( WP_PLUGIN_TEMPLATE_DIR. 'includes/admin/templates/page.php' );
 		}
 
 		private function licensing() {
@@ -244,38 +244,37 @@ if ( ! class_exists( 'WP_Plugin_Template_Admin' ) ) {
 			);
 
 			$response = wp_remote_post( $store_url, array( 
-														'body'      => $api_params,
-														'timeout'   => 15,
-														'sslverify' => false, 
-													) );
+				'body'      => $api_params,
+				'timeout'   => 15,
+				'sslverify' => false, 
+			) );
 			
 			if ( is_wp_error( $response ) ) {
 				return false;
 			}
 
-			$license_data   = json_decode( wp_remote_retrieve_body( $response ) );
-			$licenseStatus  = $license_data->license;
-			$supportUrl     = WP_PLUGIN_TEMPLATE_SUPPORT_URL;
-			$plugin_name    = WP_PLUGIN_TEMPLATE_NAME;
+			$license_data       = json_decode( wp_remote_retrieve_body( $response ) );
+			$license_status     = $license_data->license;
+			$support_url        = WP_PLUGIN_TEMPLATE_SUPPORT_URL;
+			$plugin_name        = WP_PLUGIN_TEMPLATE_NAME;
 
-			$license_page   = wp_pt_get_admin_page_by_name( 'license' );
+			$license_page       = wp_pt_get_admin_page_by_name( 'license' );
 
 			$licensing_page_url = admin_url( 'admin.php?page='. $license_page['slug'] );
 			
-			switch( $licenseStatus )
-			{
+			switch( $license_status ) {
 				case 'no_activations_left':
 					/*
 					 * This license activation limit has beeen reached
 					 */
 					$this->message      = 'Your have reached your activation limit for "' . $plugin_name . '"! <br/>'
-							. 'Please, purchase a new license or contact <a target="_blank" href="' . esc_url_raw( $supportUrl ) . '">support</a>.';
+							. 'Please, purchase a new license or contact <a target="_blank" href="' . esc_url_raw( $support_url ) . '">support</a>.';
 					$this->message_error = TRUE;
 					break;
 
 				case 'deactivated':
 				case 'site_inactive':
-					$this->message      = __( 'Your license is not active for this URL.' );
+					$this->message      = __( 'Your license is not active for this URL.', 'wp-plugin-template' );
 					$this->message_error = TRUE;
 					break;
 
@@ -307,35 +306,35 @@ if ( ! class_exists( 'WP_Plugin_Template_Admin' ) ) {
 					break;
 
 				case 'valid':
-						$now  = current_time( 'timestamp' );
-						$expiration = strtotime( $license_data->expires, current_time( 'timestamp' ) );
-						if ( $expiration > $now && $expiration - $now < ( DAY_IN_SECONDS * 30 ) ) {
-							$this->message      = sprintf(
-								__( 'Your license key provided for "' . $plugin_name . '" is expires soon! It expires on %s. <a href="%s" target="_blank">Renew your license key</a>.', 'wp-plugin-template' ),
-								date_i18n( get_option( 'date_format' ), strtotime( $license_data->expires, current_time( 'timestamp' ) ) ),
-								'https://www.pluginsandsnippets.com/my-purchase-history/'
-							);
-							$this->message_error = TRUE;
-						}
-						break;
+					$now  = current_time( 'timestamp' );
+					$expiration = strtotime( $license_data->expires, current_time( 'timestamp' ) );
+					if ( $expiration > $now && $expiration - $now < ( DAY_IN_SECONDS * 30 ) ) {
+						$this->message      = sprintf(
+							__( 'Your license key provided for "' . $plugin_name . '" is expires soon! It expires on %s. <a href="%s" target="_blank">Renew your license key</a>.', 'wp-plugin-template' ),
+							date_i18n( get_option( 'date_format' ), strtotime( $license_data->expires, current_time( 'timestamp' ) ) ),
+							'https://www.pluginsandsnippets.com/my-purchase-history/'
+						);
+						$this->message_error = TRUE;
+					}
+					break;
 
 				case 'item_name_mismatch' :
-						$this->message          = sprintf( __( 'This appears to be an invalid license key for "%s."' ), $plugin_name );
-						$this->message_error    = TRUE;
-						break;
+					$this->message          = sprintf( __( 'This appears to be an invalid license key for "%s."', 'wp-plugin-template' ), $plugin_name );
+					$this->message_error    = TRUE;
+					break;
 
 				case 'revoked' :
-						$this->message          = __( 'Your license key has been disabled for "'.$plugin_name.'".' );
-						$this->message_error    = TRUE;
-						break;
+					$this->message          = __( 'Your license key has been disabled for "'.$plugin_name.'".', 'wp-plugin-template' );
+					$this->message_error    = TRUE;
+					break;
 
 				case 'expired' :
-						$this->message          = sprintf(
-							__( 'Your license key expired on %s. for "'.$plugin_name.'". Please Purchase a new license to receive further updates from <a target="_blank" href="' . esc_url_raw( $store_url) . '">here</a>.' ),
-							date_i18n( get_option( 'date_format' ), strtotime( $license_data->expires, current_time( 'timestamp' ) ) )
-						);
-						$this->message_error    = TRUE;
-						break;
+					$this->message          = sprintf(
+						__( 'Your license key expired on %s. for "' . $plugin_name . '". Please Purchase a new license to receive further updates from <a target="_blank" href="' . esc_url_raw( $store_url) . '">here</a>.' ),
+						date_i18n( get_option( 'date_format' ), strtotime( $license_data->expires, current_time( 'timestamp' ) ) )
+					);
+					$this->message_error    = TRUE;
+					break;
 
 				default:
 					break;
@@ -357,8 +356,8 @@ if ( ! class_exists( 'WP_Plugin_Template_Admin' ) ) {
 				get_option( 'wp_pt_review_time' ) < time() &&
 				! get_option( 'wp_pt_dismiss_review_notice' )
 			) {
-				add_action( 'admin_notices', array($this,'notice_review' ) );
-				add_action( 'admin_footer', array($this,'notice_review_script' ) );
+				add_action( 'admin_notices', array( $this, 'notice_review' ) );
+				add_action( 'admin_footer', array( $this, 'notice_review_script' ), 5 );
 			}
 		}
 
@@ -380,14 +379,14 @@ if ( ! class_exists( 'WP_Plugin_Template_Admin' ) ) {
 			$user_n = '';
 			
 			if ( !empty( $current_user->display_name ) ) {
-				$user_n = " ".$current_user->display_name;    
+				$user_n = " " . $current_user->display_name;    
 			}
 			
 			echo "<div id='wp-plugin-template-review' class='notice notice-info is-dismissible'><p>" .
 
-			sprintf( __( "Hi%s, Thank you for using <b>".WP_PLUGIN_TEMPLATE_NAME."</b>. Please don't forget to rate our plugin. We sincerely appreciate your feedback.", 'wp-plugin-template' ), $user_n )
+			sprintf( __( "Hi%s, Thank you for using <b>" . WP_PLUGIN_TEMPLATE_NAME . "</b>. Please don't forget to rate our plugin. We sincerely appreciate your feedback.", 'wp-plugin-template' ), $user_n )
 			.
-			'<br><a target="_blank" href="'.WP_PLUGIN_TEMPLATE_REVIEW_URL.'" class="button-secondary">' . esc_html__( 'Post Review', 'wp-plugin-template' ) . '</a>' .
+			'<br><a target="_blank" href="' . WP_PLUGIN_TEMPLATE_REVIEW_URL . '" class="button-secondary">' . esc_html__( 'Post Review', 'wp-plugin-template' ) . '</a>' .
 			'</p></div>';
 		}
 
@@ -395,19 +394,7 @@ if ( ! class_exists( 'WP_Plugin_Template_Admin' ) ) {
 		 * Loads the inline script to dismiss the review notice.
 		 */
 		public function notice_review_script() {
-			echo
-				"<script>\n" .
-				"jQuery(document).on('click', '#wp-plugin-template-review .notice-dismiss', function() {\n" .
-				"\tvar wp_pt_review_data = {\n" .
-				"\t\taction: 'wp_pt_review_notice',\n" .
-				"\t};\n" .
-				"\tjQuery.post(ajaxurl, wp_pt_review_data, function(response) {\n" .
-				"\t\tif (response) {\n" .
-				"\t\t\tconsole.log(response);\n" .
-				"\t\t}\n" .
-				"\t});\n" .
-				"});\n" .
-				"</script>\n";
+			wp_enqueue_script( 'wp_pt_admin_script', WP_PLUGIN_TEMPLATE_URL . 'assets/js/review.min.js' , array() , WP_PLUGIN_TEMPLATE_VER );
 		}
 
 		/**
@@ -420,7 +407,7 @@ if ( ! class_exists( 'WP_Plugin_Template_Admin' ) ) {
 				return;
 			}
 
-			include WP_PLUGIN_TEMPLATE_DIR . 'includes/deactivation-form.php';
+			include WP_PLUGIN_TEMPLATE_DIR . 'includes/admin/templates/deactivation.php';
 		}
 
 		/**
@@ -437,7 +424,7 @@ if ( ! class_exists( 'WP_Plugin_Template_Admin' ) ) {
 				wp_die();
 			}
 
-			$reason_id = sanitize_text_field( wp_unslash( $_POST['reason'] ) );
+			$reason_id = intval( sanitize_text_field( wp_unslash( $_POST['reason'] ) ) );
 
 			if ( empty( $reason_id ) ) {
 				wp_die();
@@ -445,20 +432,20 @@ if ( ! class_exists( 'WP_Plugin_Template_Admin' ) ) {
 			
 			$reason_info = sanitize_text_field( wp_unslash( $_POST['reason_detail'] ) );
 
-			if ( '1' == $reason_id ) {
-				$reason_text = 'I only needed the plugin for a short period';
-			} elseif ( '2' == $reason_id ) {
-				$reason_text = 'I found a better plugin';
-			} elseif ( '3' == $reason_id ) {
-				$reason_text = 'The plugin broke my site';
-			} elseif ( '4' == $reason_id ) {
-				$reason_text = 'The plugin suddenly stopped working';
-			} elseif ( '5' == $reason_id ) {
-				$reason_text = 'I no longer need the plugin';
-			} elseif ( '6' == $reason_id ) {
-				$reason_text = 'It\'s a temporary deactivation. I\'m just debugging an issue.';
-			} elseif ( '7' == $reason_id ) {
-				$reason_text = 'Other';
+			if ( 1 === $reason_id ) {
+				$reason_text = __( 'I only needed the plugin for a short period', 'wp-plugin-template' );
+			} elseif ( 2 === $reason_id ) {
+				$reason_text = __( 'I found a better plugin', 'wp-plugin-template' );
+			} elseif ( 3 === $reason_id ) {
+				$reason_text = __( 'The plugin broke my site', 'wp-plugin-template' );
+			} elseif ( 4 === $reason_id ) {
+				$reason_text = __( 'The plugin suddenly stopped working', 'wp-plugin-template' );
+			} elseif ( 5 === $reason_id ) {
+				$reason_text = __( 'I no longer need the plugin', 'wp-plugin-template' );
+			} elseif ( 6 === $reason_id ) {
+				$reason_text = __( 'It\'s a temporary deactivation. I\'m just debugging an issue.', 'wp-plugin-template' );
+			} elseif ( 7 === $reason_id ) {
+				$reason_text = __( 'Other', 'wp-plugin-template' );
 			}
 
 			$cuurent_user = wp_get_current_user();
@@ -480,16 +467,16 @@ if ( ! class_exists( 'WP_Plugin_Template_Admin' ) ) {
 			$to         = 'info@pluginsandsnippets.com';
 			$subject    = 'Plugin Uninstallation';
 			
-			$body  = '<p>Plugin Name: '.WP_PLUGIN_TEMPLATE_NAME.'</p>';
-			$body .= '<p>Plugin Version: '.WP_PLUGIN_TEMPLATE_VER.'</p>';
-			$body .= '<p>Reason: '. $reason_text .'</p>';
-			$body .= '<p>Reason Info: '. $reason_info.'</p>';
-			$body .= '<p>Admin Name: '. $cuurent_user->display_name .'</p>';
-			$body .= '<p>Admin Email: '. get_option( 'admin_email' ) .'</p>';
-			$body .= '<p>Website: '. get_site_url() .'</p>';
-			$body .= '<p>Website Language: '. get_bloginfo( 'language' ) .'</p>';
-			$body .= '<p>Wordpress Version: '. get_bloginfo( 'version' ) .'</p>';
-			$body .= '<p>PHP Version: '. PHP_VERSION .'</p>';
+			$body  = '<p>Plugin Name: ' . WP_PLUGIN_TEMPLATE_NAME . '</p>';
+			$body .= '<p>Plugin Version: ' . WP_PLUGIN_TEMPLATE_VER . '</p>';
+			$body .= '<p>Reason: ' . $reason_text . '</p>';
+			$body .= '<p>Reason Info: ' . $reason_info . '</p>';
+			$body .= '<p>Admin Name: ' . $cuurent_user->display_name . '</p>';
+			$body .= '<p>Admin Email: ' . get_option( 'admin_email' ) . '</p>';
+			$body .= '<p>Website: ' . get_site_url() . '</p>';
+			$body .= '<p>Website Language: ' . get_bloginfo( 'language' ) . '</p>';
+			$body .= '<p>Wordpress Version: ' . get_bloginfo( 'version' ) . '</p>';
+			$body .= '<p>PHP Version: ' . PHP_VERSION . '</p>';
 			
 			$headers = array( 'Content-Type: text/html; charset=UTF-8' );
 			 
@@ -506,8 +493,8 @@ if ( ! class_exists( 'WP_Plugin_Template_Admin' ) ) {
 
 			static $this_plugin;
 
-			$main_page = wp_pt_get_admin_page_by_name();
-			$settings_link = sprintf( esc_html__( '%1$s Settings %2$s', 'edd-lpct' ), '<a href="' . admin_url( 'admin.php?page='. $main_page['slug'] ) . '">', '</a>' );
+			$main_page     = wp_pt_get_admin_page_by_name();
+			$settings_link = sprintf( esc_html__( '%1$s Settings %2$s', 'wp-plugin-template' ), '<a href="' . admin_url( 'admin.php?page='. $main_page['slug'] ) . '">', '</a>' );
 			
 			array_unshift( $links, $settings_link );
 
