@@ -124,9 +124,9 @@ $status  = isset( $license_status['license_status'] ) ? $license_status['license
 							<input class="regular-text" value="<?php esc_attr_e( $license ); ?>" name="wp_pt_license_key" placeholder="<?php echo __( 'Enter your License key', 'wp-plugin-template' ); ?>" type="text" />
 							<?php
 
-								if ( empty( $license ) ) {
-									echo '<br />' . sprintf( __( 'To receive updates and support, please enter a valid <a target="_blank" href="%s"> %s license key</a>.', 'wp-plugin-template' ), WP_PLUGIN_TEMPLATE_PURCHASES_URL, WP_PLUGIN_TEMPLATE_NAME );
-								}
+							if ( empty( $license ) ) {
+								echo '<br />' . sprintf( __( 'To receive updates and support, please enter a valid <a target="_blank" href="%s"> %s license key</a>.', 'wp-plugin-template' ), WP_PLUGIN_TEMPLATE_PURCHASES_URL, WP_PLUGIN_TEMPLATE_NAME );
+							}
 
 							?>
 						</td>

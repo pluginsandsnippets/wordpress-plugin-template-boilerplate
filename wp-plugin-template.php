@@ -307,4 +307,4 @@ register_activation_hook( __FILE__, 'wp_pt_activation' );
 function wp_pt_load_functions() {
 	require_once WP_PLUGIN_TEMPLATE_DIR . 'includes/functions.php';
 }
-add_action ( 'init', 'wp_pt_load_functions' );
+add_action( 'init', 'wp_pt_load_functions' );

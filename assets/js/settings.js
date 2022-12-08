@@ -25,7 +25,7 @@
 		$( '.wp-pt-upload-file' ).on( 'click', function( e ) {
 			e.preventDefault();
 			var $upload_field = $( this ).closest( 'td' ).find( 'input' );
-			var upload_frame = wp.media({
+			var upload_frame = wp.media( {
 				title: 'Select Media',
 				multiple : false,
 			} );

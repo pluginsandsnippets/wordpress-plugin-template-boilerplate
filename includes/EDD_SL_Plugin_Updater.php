@@ -447,7 +447,7 @@ class EDD_SL_Plugin_Updater {
 			return false;
 		}
 
-		if ( $this->api_url == trailingslashit ( home_url() ) ) {
+		if ( $this->api_url == trailingslashit( home_url() ) ) {
 			return false; // Don't allow a plugin to ping itself
 		}
 

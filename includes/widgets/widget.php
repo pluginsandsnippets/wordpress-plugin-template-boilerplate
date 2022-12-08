@@ -31,10 +31,10 @@ if ( ! class_exists( 'WP_Plugin_Template_Dummy_Widgets' ) ) :
 		public function form( $instance ) {
 			$title = ! empty( $instance['title'] ) ? $instance['title'] : esc_html__( 'New title', 'wp-plugin-template' );
 			?>
-				<p>
+			<p>
 				<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_attr_e( 'Title:', 'wp-plugin-template' ); ?></label> 
 				<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
-				</p>
+			</p>
 			<?php
 		}
 

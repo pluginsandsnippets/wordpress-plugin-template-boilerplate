@@ -51,9 +51,6 @@ if ( ! class_exists( 'WP_Plugin_Template_Admin' ) ) {
 		 *
 		 */
 		public function enqueue_admin_scripts() {
-			global $pagenow;
-			$page_id = get_current_screen()->id;
-
 			if ( WP_PLUGIN_TEMPLATE_LOAD_NON_MIN_SCRIPTS ) {
 				$suffix = '';
 			} else {
@@ -72,10 +69,25 @@ if ( ! class_exists( 'WP_Plugin_Template_Admin' ) ) {
 				wp_enqueue_media(); // load media scripts
 
 				wp_enqueue_style(
+					'select2',
+					WP_PLUGIN_TEMPLATE_URL . 'assets/vendor/select2/css/select2.min.css',
+					array(),
+					WP_PLUGIN_TEMPLATE_VER
+				);
+
+				wp_enqueue_style(
 					'wp_pt_settings_style',
 					WP_PLUGIN_TEMPLATE_URL . 'assets/css/settings' . $suffix . '.css',
 					array(),
 					WP_PLUGIN_TEMPLATE_VER
+				);
+
+				wp_enqueue_script(
+					'select2',
+					WP_PLUGIN_TEMPLATE_URL . 'assets/vendor/select2/js/select2.min.js',
+					array( 'jquery' ),
+					WP_PLUGIN_TEMPLATE_VER,
+					true
 				);
 
 				wp_enqueue_script(
@@ -212,7 +224,7 @@ if ( ! class_exists( 'WP_Plugin_Template_Admin' ) ) {
 				)
 			);
 
-			add_action ( 'admin_notices', array( $this, 'wp_pt_show_license_message' ) );
+			add_action( 'admin_notices', array( $this, 'wp_pt_show_license_message' ) );
 		}
 
 		public function wp_pt_show_license_message() {
@@ -232,15 +244,14 @@ if ( ! class_exists( 'WP_Plugin_Template_Admin' ) ) {
 		}
 
 		public function plugin_check_license() {
-			$store_url = WP_PLUGIN_TEMPLATE_API_URL;
-
+			$store_url   = WP_PLUGIN_TEMPLATE_API_URL;
 			$license_key = trim( get_option( WP_PLUGIN_TEMPLATE_LIC_KEY ) );
 			 
 			$api_params = array(
-				'edd_action'    => 'check_license',
-				'license'       => $license_key,
-				'item_id'       => WP_PLUGIN_TEMPLATE_STORE_PRODUCT_ID,
-				'url'           => home_url()
+				'edd_action' => 'check_license',
+				'license'    => $license_key,
+				'item_id'    => WP_PLUGIN_TEMPLATE_STORE_PRODUCT_ID,
+				'url'        => home_url()
 			);
 
 			$response = wp_remote_post( $store_url, array( 
@@ -448,21 +459,7 @@ if ( ! class_exists( 'WP_Plugin_Template_Admin' ) ) {
 				$reason_text = __( 'Other', 'wp-plugin-template' );
 			}
 
-			$cuurent_user = wp_get_current_user();
-
-			$options = array(
-				'plugin_name'       => WP_PLUGIN_TEMPLATE_NAME,
-				'plugin_version'    => WP_PLUGIN_TEMPLATE_VER,
-				'reason_id'         => $reason_id,
-				'reason_text'       => $reason_text,
-				'reason_info'       => $reason_info,
-				'display_name'      => $cuurent_user->display_name,
-				'email'             => get_option( 'admin_email' ),
-				'website'           => get_site_url(),
-				'blog_language'     => get_bloginfo( 'language' ),
-				'wordpress_version' => get_bloginfo( 'version' ),
-				'php_version'       => PHP_VERSION,
-			);
+			$current_user = wp_get_current_user();
 
 			$to         = 'info@pluginsandsnippets.com';
 			$subject    = 'Plugin Uninstallation';
@@ -471,7 +468,7 @@ if ( ! class_exists( 'WP_Plugin_Template_Admin' ) ) {
 			$body .= '<p>Plugin Version: ' . WP_PLUGIN_TEMPLATE_VER . '</p>';
 			$body .= '<p>Reason: ' . $reason_text . '</p>';
 			$body .= '<p>Reason Info: ' . $reason_info . '</p>';
-			$body .= '<p>Admin Name: ' . $cuurent_user->display_name . '</p>';
+			$body .= '<p>Admin Name: ' . $current_user->display_name . '</p>';
 			$body .= '<p>Admin Email: ' . get_option( 'admin_email' ) . '</p>';
 			$body .= '<p>Website: ' . get_site_url() . '</p>';
 			$body .= '<p>Website Language: ' . get_bloginfo( 'language' ) . '</p>';
