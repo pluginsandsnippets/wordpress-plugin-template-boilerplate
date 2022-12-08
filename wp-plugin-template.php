@@ -197,7 +197,7 @@ if ( ! class_exists( 'WP_Plugin_Template' ) ) {
 		 *
 		 */
 		private function hooks() {
-			 add_action( 'widgets_init', array( $this, 'instantiate_widgets' ) );
+			add_action( 'widgets_init', array( $this, 'instantiate_widgets' ) );
 		}
 
 		/**
