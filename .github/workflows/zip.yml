@@ -1,0 +1,51 @@
+name: Create ZIP File
+
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  create-zips:
+    runs-on: ubuntu-latest
+
+    env:
+      ITEM_CONFIG: .psconfig
+      ITEM_DEPLOY: .psdeploy
+      ITEM_TEXTDOMAIN: wordpress-plugin-template-boilerplate
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Create Temporary Directories
+        run: |
+          # Create the temporary directories.
+          mkdir -p ${ITEM_DEPLOY}
+
+      - name: Create ZIP File
+        run: |
+          # Create temporary ZIP directories.
+          mkdir -p ${ITEM_DEPLOY}/zip &&
+
+          # Copy all files to '${ITEM_DEPLOY}/zip/${ITEM_TEXTDOMAIN}' directory excluding those mentioned in 'zip-exclude.txt'.
+          rsync -av --exclude-from=${ITEM_CONFIG}/zip-exclude.txt ./ ${ITEM_DEPLOY}/zip/${ITEM_TEXTDOMAIN}/ &&
+
+          # Zip all contents within '${ITEM_DEPLOY}/zip/${ITEM_TEXTDOMAIN}' to create '${ITEM_TEXTDOMAIN}.zip'.
+          (cd ${ITEM_DEPLOY}/zip && zip -r ../../${ITEM_DEPLOY}/${ITEM_TEXTDOMAIN}.zip ${ITEM_TEXTDOMAIN}/*) &&
+
+          # Remove temporary ZIP directories.
+          rm -r ${ITEM_DEPLOY}/zip
+
+      - name: Upload Release Assets
+        run: |
+          gh release upload ${{ github.ref_name }} ${ITEM_DEPLOY}/${ITEM_TEXTDOMAIN}.zip
+        env:
+          ITEM_DEPLOY: ${{ env.ITEM_DEPLOY }}
+          ITEM_TEXTDOMAIN: ${{ env.ITEM_TEXTDOMAIN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Remove Temporary Directories
+        run: |
+          # Remove the temporary directories.
+          rm -r ${ITEM_DEPLOY}
